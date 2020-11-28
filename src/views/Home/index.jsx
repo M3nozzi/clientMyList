@@ -1,8 +1,15 @@
 import React from 'react';
 
+import * as S from './styles';
+
+import Header from '../../components/Header';
+
 function Home() {
-  return (
-    <h1>My List App Home</h1>
+    return (
+      <S.Container>
+            <Header/>
+      </S.Container>
+   
   );
 }
 
