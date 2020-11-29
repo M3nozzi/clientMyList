@@ -45,6 +45,12 @@ export const RightSide = styled.div`
         }
     }
 
+    button{
+        background:none;
+        border: none;
+        cursor:pointer;
+    }
+
     #notification {
         img{
             width: 25px;
