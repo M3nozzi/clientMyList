@@ -12,6 +12,7 @@ export const Container = styled.div`
 
 export const Form = styled.div`
     width: 50%;
+    margin-bottom: 70px;
 
 `;
 
@@ -106,4 +107,26 @@ export const Options = styled.div`
         font-size:18px;
     }
 
+`;
+
+export const Save = styled.div`
+    width:100%;
+    margin-top:20px;
+    display:flex;
+    justify-content:center;
+
+    button{
+        width:20%;
+        background:#EE6B26;
+        border: none;
+        font-size: 20px;
+        color:#FFF;
+        padding: 15px;
+        border-radius:30px;
+        cursor:pointer;
+
+        &:hover{
+            opacity:0.7;
+        }
+    }
 `;

@@ -68,6 +68,10 @@ function Task() {
                 </div>        
                 <button type='button'>DELETE</button> 
             </S.Options>
+
+            <S.Save>
+                <button type='button'>SAVE</button>        
+            </S.Save> 
                 
         </S.Form>
         <Footer/>
