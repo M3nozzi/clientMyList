@@ -116,7 +116,7 @@ export const Save = styled.div`
     justify-content:center;
 
     button{
-        width:20%;
+        width:35%;
         background:#EE6B26;
         border: none;
         font-size: 20px;
