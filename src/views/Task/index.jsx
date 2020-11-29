@@ -47,18 +47,18 @@ function Task() {
             </S.Input>
                 
             <S.TextArea>
-                <span>Title</span>
+                <span>Description</span>
                     <textarea rows={5} placeholder='Type the Task Details!'/>    
             </S.TextArea>
                 
             <S.Input>
                 <span>Data</span>
-                <input type='date' placeholder='Type your appointment title here!'></input>    
+                <input type='date'></input>    
             </S.Input> 
 
             <S.Input>
                 <span>Hora</span>
-                <input type='time' placeholder='Type your appointment title here!'></input>    
+                <input type='time'></input>    
             </S.Input>
             
             <S.Options>
