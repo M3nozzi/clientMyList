@@ -3,8 +3,7 @@ import styled from 'styled-components';
 export const Container = styled.div`
     width: 290px;
     height: 90px;
-    background: ${props => props.actived ? '#EE6B26' : '#20295F'};
-    /* background:#00a6a6; */
+    background: ${props => props.actived ? '#EE6B26' : '#00a6a6'};
     padding: 10px;
     cursor: pointer;
 

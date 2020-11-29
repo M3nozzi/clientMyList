@@ -3,8 +3,8 @@ import styled from 'styled-components';
 export const Container = styled.div`
     width: 100%;
     height: 70px;
-    background: #20295F;
-     /* background:#00a6a6; */
+    /* background: #20295F; */
+    background:#00a6a6;
     border-bottom: 5px solid #EE6B26;
 
     display: flex;
