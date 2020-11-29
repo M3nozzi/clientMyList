@@ -15,9 +15,9 @@ function Home() {
   // eslint-disable-next-line
   async function loadTasks() {
     await api.get(`/task/filter/${filterActived}/11:11:11:11:11:11`)
+      // eslint-disable-next-line
       .then(response => {
         setTasks(response.data)
-        console.log(` ->> ${response.data}`)
     })
   }
 
