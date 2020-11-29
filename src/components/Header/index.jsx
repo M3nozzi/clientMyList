@@ -1,5 +1,6 @@
 import React from 'react';
 import * as S from './styles';
+import { Link } from 'react-router-dom';
 
 import logo from '../../assets/Logo1.png';
 import bell from '../../assets/bell.png';
@@ -11,11 +12,11 @@ function Header({ lateCount, clickNotification }) {
         <img src={logo} alt="My List App Logo"/>
       </S.LeftSide>
       <S.RightSide>
-        <a href='#'>HOME</a>
+        <Link to='/'>HOME</Link>
         <span className='divider'/>
-        <a href='#'>NEW APPOINTMENT</a>
+        <Link to='/task'>NEW APPOINTMENT</Link>
         <span className='divider'/>
-        <a href='#'>SYNC</a>
+        <Link href='#'>SYNC</Link>
         <span className='divider'/>
         <button onClick={clickNotification} id='notification'>
           <img src={bell} alt='Notification'/>
