@@ -88,4 +88,15 @@ export const RightSide = styled.div`
             color: #EE6B26;
         }
     }
+
+    #btnDesync{
+        font-size: 16px;
+        color:#FFF;
+        font-weight: bold;
+        text-decoration: none;
+        margin: 0 10px;
+        &:hover{
+            color: #EE6B26;
+        }
+    }
 `;

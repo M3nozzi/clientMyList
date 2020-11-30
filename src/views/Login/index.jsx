@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { login } from '../../services/auth';
 
 import api from '../../services/api';
@@ -21,7 +21,7 @@ const Login = () => {
             const response = await api.post('/task/login', { email, password });
             login(response.data.token);
     
-            history.push('/task');
+            history.push('/');
         } catch (err) {
             setInputError('e-mail or password not correct')
             console.log(err)
@@ -65,10 +65,6 @@ const Login = () => {
                             
           <S.CardFieldset>
             <S.CardButton type='submit'>Login</S.CardButton>
-          </S.CardFieldset>
-
-          <S.CardFieldset>
-            {/* <S.CardLink>Don't have an account? <Link to={'/signup'}>Sign up</Link></S.CardLink> */}
           </S.CardFieldset>
         </S.CardBody>
         </S.CardWrapper>

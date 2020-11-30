@@ -4,6 +4,7 @@ import { Link, useHistory } from 'react-router-dom';
 
 import { logout } from '../../services/auth';
 import api from '../../services/api';
+import isConnected from '../../utils/isConnected';
 
 import logo from '../../assets/Logo1.png';
 import bell from '../../assets/bell.png';
@@ -12,7 +13,7 @@ function Header({ clickNotification }) {
   const [lateCount, setLateCount] = useState();
 
   async function lateVerify() {
-    await api.get(`/task/filter/late/11:11:11:11:11:11`)
+    await api.get(`/task/filter/late/${isConnected}`)
       // eslint-disable-next-line
       .then(response => {
         setLateCount(response.data.length)
@@ -30,6 +31,11 @@ function Header({ clickNotification }) {
     lateVerify();
   }, [])
 
+  async function LogOut() {
+    localStorage.removeItem('@myListApp/macaddress');
+    window.location.reload();
+  }
+
   return (
     <S.Container>
       <S.LeftSide>
@@ -39,8 +45,12 @@ function Header({ clickNotification }) {
         <Link to='/'>HOME</Link>
         <span className='divider'/>
         <Link to='/task'>NEW APPOINTMENT</Link>
-        <span className='divider'/>
+        <span className='divider' />
+        { !isConnected ? 
         <Link to='/qrcode'>SYNC</Link>
+          :
+        <button type='button'id='btnDesync' onClick={LogOut}>DESYNC</button>
+        }
         {
           lateCount &&
           <>
