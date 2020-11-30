@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import * as S from './styles';
+import SyncLoader from 'react-spinners/SyncLoader';
 
 import api from '../../services/api';
 
@@ -11,7 +13,6 @@ import TaskCard from '../../components/TaskCard';
 function Home() {
   const [filterActived, setFilterActived] = useState('all');
   const [tasks, setTasks] = useState([]);
-  const [lateCount, setLateCount] = useState();
 
   // eslint-disable-next-line
   async function loadTasks() {
@@ -22,27 +23,20 @@ function Home() {
     })
   }
 
-  async function lateVerify() {
-    await api.get(`/task/filter/late/11:11:11:11:11:11`)
-      // eslint-disable-next-line
-      .then(response => {
-        setLateCount(response.data.length)
-    })
-  }
+
 
   function Notification() {
     setFilterActived('late');
   }
 
   useEffect(() => {
-    loadTasks();
-    lateVerify();
-  }, [filterActived, loadTasks])
+    loadTasks()
+  }, [filterActived])
 
 
     return (
       <S.Container>
-        <Header lateCount={lateCount} clickNotification={ Notification }/>
+        <Header clickNotification={ Notification }/>
         <S.FilterArea>
           <button type='button' onClick={() => setFilterActived('all')}>
             <FilterCard title='All' actived={filterActived === 'all'}  />
@@ -60,19 +54,25 @@ function Home() {
             <FilterCard title='Year' actived={ filterActived === 'year'} />
           </button>
         </S.FilterArea>
-
+      
         <S.Title>
           <h3>{ filterActived === 'late' ? 'LATE APPOINTMENTS' : 'APPOINTMENTS'}</h3>
         </S.Title>
-
-        <S.Content>
-          {
-            tasks.map(t => (
-              <TaskCard key={t._id} type={t.type} title={t.title} when={t.when} done={t.done} />
-            ))
-          }
-        </S.Content>
-       
+        
+        { tasks ?
+          <S.Content>
+            {
+              tasks.map(t => (
+                <Link to={`/task/${t._id}`}>
+                  <TaskCard key={t._id} type={t.type} title={t.title} when={t.when} done={t.done} />
+                </Link>
+              ))
+            }
+          </S.Content>
+          : <S.Content>
+            <SyncLoader size={15} margin={12} color={'#00a6a6'}/>
+          </S.Content>  
+        }
         <Footer/>
       </S.Container>
    

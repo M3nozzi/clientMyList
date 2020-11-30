@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import { Redirect } from 'react-router-dom';
 import * as S from './styles';
+import { format } from 'date-fns';
 
 import api from '../../services/api';
 
@@ -8,8 +10,8 @@ import Footer from '../../components/Footer';
 import TypeIcons from '../../utils/typeIcons';
 
 
-function Task() {
-    const [lateCount, setLateCount] = useState();
+function Task({ match }) {
+    const [redirect, setRedirect] = useState(false);
     const [type, setType] = useState();
     const [id, setID] = useState();
     const [done, setDone] = useState(false);
@@ -20,35 +22,77 @@ function Task() {
     const [macaddress, setMacaddress] = useState('11:11:11:11:11:11');
 
     
-    async function lateVerify() {
-        await api.get(`/task/filter/late/11:11:11:11:11:11`)
-        // eslint-disable-next-line
-        .then(response => {
-            setLateCount(response.data.length)
-        })
+    async function LoadTaskDetails() {
+        await api.get(`/task/${match.params.id}`)
+            .then(response => {
+                setType(response.data.type)
+                setDone(response.data.done)
+                setTitle(response.data.title)
+                setDescription(response.data.description)
+                setDate(format(new Date(response.data.when), 'yyyy-MM-dd'))
+                setHour(format(new Date (response.data.when), 'HH:mm'))
+            })
+        }
+    async function save() {
+
+        if (!title)
+            return alert('Please, insert a title to this appointment')
+        else if (!description)
+            return alert('Please, insert a description to this appointment')
+        else if (!type)
+            return alert('Please, choose a icon to define a type to this appointment')
+        else if (!date)
+            return alert('Please, choose the date of this appointment')
+        else if (!hour)
+            return alert('Please, choose the hour of this appointment')
+        
+        if (match.params.id) {
+
+            await api.put(`/task/${match.params.id}`, {
+                macaddress,
+                done,
+                type,
+                title,
+                description,
+                when: `${date}T${hour}:00.000`
+            
+            }).then(() =>
+                setRedirect(true)
+            )
+            
+        } else {
+
+            await api.post('/task', {
+                macaddress,
+                type,
+                title,
+                description,
+                when: `${date}T${hour}:00.000`
+            
+            }).then(() =>
+                setRedirect(true)
+            )
+        }      
     }
     
-    async function save() {
-        await api.post('/task', {
-            macaddress,
-            type,
-            title,
-            description,
-            when: `${date}T${hour}:00.000`
-            
-        }).then( () =>
-          alert('TASK SUCCESSFULLY REGISTERED')
-        )
-  }
+    async function Remove() {
+        const answer = window.confirm('Are you sure you want to delete?')   
+        if (answer === true) {
+            await api.delete(`/task/${match.params.id}`)
+                .then(() => setRedirect(true));
+        } 
     
-  useEffect(() => {
-    lateVerify();
+    }
+
+    useEffect(() => {
+      LoadTaskDetails();
   }, [])
 
 
     return (
       <S.Container>
-        <Header lateCount={lateCount} />    
+         {redirect && <Redirect to='/' />}
+        <Header />    
         <S.Form>
             <S.TypeIcons>
                 {
@@ -87,11 +131,14 @@ function Task() {
             </S.Input>
             
             <S.Options>
-                <div>
-                        <input type='checkbox' checked={done} onChange={() => setDone(!done)}/>        
-                        <span>DONE</span>        
-                </div>        
-                <button type='button'>DELETE</button> 
+            {match.params.id && 
+                <div>   
+                    <input type='checkbox' checked={done} onChange={() => setDone(!done)}/>        
+                    <span>DONE</span>
+                  
+                </div>
+              }    
+                    { match.params.id && <button type='button' onClick={Remove}>DELETE</button>} 
             </S.Options>
 
             <S.Save>

@@ -1,11 +1,35 @@
-import React from 'react';
+import React, {useEffect, useState } from 'react';
 import * as S from './styles';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
+
+import { logout } from '../../services/auth';
+import api from '../../services/api';
 
 import logo from '../../assets/Logo1.png';
 import bell from '../../assets/bell.png';
 
-function Header({ lateCount, clickNotification }) {
+function Header({ clickNotification }) {
+  const [lateCount, setLateCount] = useState();
+
+  async function lateVerify() {
+    await api.get(`/task/filter/late/11:11:11:11:11:11`)
+      // eslint-disable-next-line
+      .then(response => {
+        setLateCount(response.data.length)
+    })
+  }
+
+  const history = useHistory();
+
+  const handleLogout = () => {
+    logout();
+    history.push('/login');
+  };
+
+  useEffect(() => {
+    lateVerify();
+  }, [])
+
   return (
     <S.Container>
       <S.LeftSide>
@@ -16,12 +40,19 @@ function Header({ lateCount, clickNotification }) {
         <span className='divider'/>
         <Link to='/task'>NEW APPOINTMENT</Link>
         <span className='divider'/>
-        <Link href='#'>SYNC</Link>
+        <Link to='/qrcode'>SYNC</Link>
+        {
+          lateCount &&
+          <>
+            <span className='divider'/>
+            <button onClick={clickNotification} id='notification'>
+              <img src={bell} alt='Notification'/>
+              <span>{lateCount}</span>
+            </button>
+          </>
+        }
         <span className='divider'/>
-        <button onClick={clickNotification} id='notification'>
-          <img src={bell} alt='Notification'/>
-          <span>{lateCount}</span>
-        </button>
+        <button type='submit' id='btnLogout' onClick={handleLogout}>LOGOUT</button>
       </S.RightSide>
     </S.Container>
   );
