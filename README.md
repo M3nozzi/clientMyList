@@ -1,6 +1,6 @@
 # clientMyList
 
-That's the client repository of this project, you can find the backend here ([Server](https://github.com/M3nozzi/backendList))
+That's the client repository of this project, you can find the backend repository here ([Server](https://github.com/M3nozzi/backendList))
 
 # About
  That's a plataform to register yours professionals appointments and control it. You can filter by year, month, week and today.
