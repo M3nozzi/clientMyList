@@ -12,9 +12,11 @@ That's the client repository of this project, you can find the backend repositor
 * JavaScript
 * React.js
 * Axios
-* Styled-components
+* [Styled-components](https://styled-components.com/)
 * CSS
 * HTML
+* date-fns
+* [qrcode-react](https://www.npmjs.com/package/qrcode.react)
 
 
 
